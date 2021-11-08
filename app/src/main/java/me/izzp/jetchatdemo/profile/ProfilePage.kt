@@ -17,6 +17,10 @@ import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.draw.clip
+import androidx.compose.ui.geometry.Offset
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
@@ -27,10 +31,8 @@ import com.google.accompanist.insets.navigationBarsPadding
 import me.izzp.jetchatdemo.JetChatScaffold
 import me.izzp.jetchatdemo.ProfileScreenState
 import me.izzp.jetchatdemo.R
-import me.izzp.jetchatdemo.ui.theme.JetChatTheme
-import me.izzp.jetchatdemo.ui.theme.mtColors
-import me.izzp.jetchatdemo.ui.theme.mtShapes
-import me.izzp.jetchatdemo.ui.theme.mtTypography
+import me.izzp.jetchatdemo.themeColor
+import me.izzp.jetchatdemo.ui.theme.*
 
 @Composable
 fun ProfilePage(
@@ -38,10 +40,22 @@ fun ProfilePage(
     onPeopleClick: (name: String) -> Unit,
     onConversationClick: () -> Unit,
 ) {
+    val def = mtColors.surface
+    val blue1 = mtColors.BLUE_1
+    var topBarColor by remember { mutableStateOf(def) }
     val scrollState = rememberScrollState()
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                topBarColor = scrollState.themeColor(def, blue1, 150f)
+                return super.onPreScroll(available, source)
+            }
+        }
+    }
     JetChatTheme {
         JetChatScaffold(
-            topBarColor = mtColors.surface,
+            modifier = Modifier.nestedScroll(nestedScrollConnection),
+            topBarColor = topBarColor,
             topBarActions = {
                 var open by remember { mutableStateOf(false) }
                 IconButton(
@@ -87,7 +101,7 @@ fun ProfilePage(
                         }
                     }
                 }
-            }
+            },
         ) {
             Column(
                 modifier = Modifier

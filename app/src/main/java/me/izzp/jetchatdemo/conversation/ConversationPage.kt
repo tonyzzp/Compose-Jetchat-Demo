@@ -27,8 +27,12 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.focus.FocusRequester
 import androidx.compose.ui.focus.focusRequester
 import androidx.compose.ui.focus.onFocusChanged
+import androidx.compose.ui.geometry.Offset
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.vector.ImageVector
+import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
+import androidx.compose.ui.input.nestedscroll.NestedScrollSource
+import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.platform.LocalSoftwareKeyboardController
@@ -71,10 +75,21 @@ fun ConversationPage(
     onConversationClick: () -> Unit,
     onSend: (content: String) -> Unit,
 ) {
+    val def = mtColors.surface
+    val blue1 = mtColors.BLUE_1
+    var topBarColor by remember { mutableStateOf(def) }
+    val lazyListState = rememberLazyListState()
+    val nestedScrollConnection = remember {
+        object : NestedScrollConnection {
+            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                topBarColor = lazyListState.themeColor(def, blue1)
+                return super.onPreScroll(available, source)
+            }
+        }
+    }
     JetChatTheme {
-        val lazyListState = rememberLazyListState()
         JetChatScaffold(
-            topBarColor = mtColors.surface,
+            topBarColor = topBarColor,
             topBarTitle = {
                 Column(
                     horizontalAlignment = Alignment.CenterHorizontally,
@@ -95,6 +110,7 @@ fun ConversationPage(
             },
             onConversationClick = onConversationClick,
             onPeopleClick = onPeopleClick,
+            modifier = Modifier.nestedScroll(nestedScrollConnection)
         ) {
             Column(
                 modifier = Modifier.navigationBarsWithImePadding()

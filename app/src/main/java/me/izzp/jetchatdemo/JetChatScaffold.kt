@@ -37,6 +37,7 @@ fun JetChatScaffold(
     onPeopleClick: (name: String) -> Unit = {},
     onConversationClick: () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
+    modifier: Modifier = Modifier,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
@@ -77,7 +78,8 @@ fun JetChatScaffold(
             )
         },
         content = content,
-        floatingActionButton = floatingActionButton
+        floatingActionButton = floatingActionButton,
+        modifier = modifier,
     )
 }
 
