@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/nav_main"
+    app:startDestination="@id/conversationFragment">
+
+    <fragment
+        android:id="@+id/conversationFragment"
+        android:name="me.izzp.jetchatdemo.conversation.ConversationFragment"
+        android:label="ConversationFragment" />
+    <fragment
+        android:id="@+id/profileFragment"
+        android:name="me.izzp.jetchatdemo.profile.ProfileFragment"
+        android:label="ProfileFragment">
+        <argument
+            android:name="userId"
+            app:argType="string" />
+    </fragment>
+</navigation>

@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <color name="colorPrimary">#FF0037E6</color>
+    <color name="colorSecondary">#F3B711</color>
+
+    <color name="blue500">#2196F3</color>
+    <color name="yellow500">#FFC107</color>
+    <color name="yellow_logo">#FFC107</color>
+    <color name="blue_logo">#2196F3</color>
+    <color name="ic_launcher_background">#EC407A</color>
+</resources>
