@@ -1,7 +1,10 @@
 package me.izzp.jetchatdemo
 
+import android.os.Bundle
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.ui.unit.LayoutDirection
+import androidx.navigation.NavController
+import androidx.navigation.navOptions
 import com.google.accompanist.insets.Insets
 import com.google.accompanist.insets.WindowInsets
 import kotlin.math.absoluteValue
@@ -22,4 +25,11 @@ fun PaddingValues.dump() {
     val left = calculateLeftPadding(LayoutDirection.Ltr)
     val right = calculateRightPadding(LayoutDirection.Ltr)
     println("top: $top, bottom: $bottom, left: $left, right: $right")
+}
+
+fun NavController.navigateTo(resId: Int, args: Bundle? = null) {
+    navigate(resId, args, navOptions {
+        launchSingleTop = true
+        popUpTo = graph.startDestination
+    })
 }

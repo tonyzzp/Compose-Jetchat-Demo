@@ -11,7 +11,6 @@ import androidx.compose.ui.platform.ComposeView
 import androidx.core.os.bundleOf
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
-import androidx.navigation.navOptions
 import com.google.accompanist.insets.LocalWindowInsets
 import com.google.accompanist.insets.ViewWindowInsetObserver
 import me.izzp.jetchatdemo.*
@@ -33,15 +32,11 @@ class ConversationFragment : Fragment() {
                     onPeopleClick = { name ->
                         val profile = profiles.find { it.name == name }
                         if (profile != null) {
-                            findNavController().navigate(
+                            findNavController().navigateTo(
                                 R.id.profileFragment,
                                 bundleOf(
                                     "userId" to profile.userId
-                                ),
-                                navOptions {
-                                    popUpTo = findNavController().graph.startDestination
-                                    launchSingleTop = true
-                                }
+                                )
                             )
                         }
                     },
@@ -50,14 +45,7 @@ class ConversationFragment : Fragment() {
                         startActivity(intent)
                     },
                     onConversationClick = {
-                        findNavController().navigate(
-                            R.id.conversationFragment,
-                            null,
-                            navOptions {
-                                popUpTo = findNavController().graph.startDestination
-                                launchSingleTop = true
-                            }
-                        )
+                        findNavController().navigateTo(R.id.conversationFragment)
                     },
                     onSend = {
                         exampleUiState.addMessage(
