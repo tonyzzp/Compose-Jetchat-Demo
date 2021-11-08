@@ -75,19 +75,22 @@ fun ConversationPage(
     onConversationClick: () -> Unit,
     onSend: (content: String) -> Unit,
 ) {
-    val def = mtColors.surface
-    val blue1 = mtColors.BLUE_1
-    var topBarColor by remember { mutableStateOf(def) }
-    val lazyListState = rememberLazyListState()
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                topBarColor = lazyListState.themeColor(def, blue1)
-                return super.onPreScroll(available, source)
+    JetChatTheme {
+        val isLight = mtColors.isLight
+        val def = mtColors.surface
+        val blue1 = mtColors.BLUE_1
+        var topBarColor by remember { mutableStateOf(def) }
+        val lazyListState = rememberLazyListState()
+        val nestedScrollConnection = remember {
+            object : NestedScrollConnection {
+                override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                    if (isLight) {
+                        topBarColor = lazyListState.themeColor(def, blue1)
+                    }
+                    return super.onPreScroll(available, source)
+                }
             }
         }
-    }
-    JetChatTheme {
         JetChatScaffold(
             topBarColor = topBarColor,
             topBarTitle = {

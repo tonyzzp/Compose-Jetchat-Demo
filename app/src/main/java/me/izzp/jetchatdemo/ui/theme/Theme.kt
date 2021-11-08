@@ -77,3 +77,5 @@ val Colors.BLUE_1
 val Colors.BLUE_2
     @Composable
     get() = if (isLight) Color(220, 220, 250) else Color(0, 50, 200)
+
+

@@ -40,19 +40,22 @@ fun ProfilePage(
     onPeopleClick: (name: String) -> Unit,
     onConversationClick: () -> Unit,
 ) {
-    val def = mtColors.surface
-    val blue1 = mtColors.BLUE_1
-    var topBarColor by remember { mutableStateOf(def) }
-    val scrollState = rememberScrollState()
-    val nestedScrollConnection = remember {
-        object : NestedScrollConnection {
-            override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
-                topBarColor = scrollState.themeColor(def, blue1, 150f)
-                return super.onPreScroll(available, source)
+    JetChatTheme {
+        val isLight = mtColors.isLight
+        val def = mtColors.surface
+        val blue1 = mtColors.BLUE_1
+        var topBarColor by remember { mutableStateOf(def) }
+        val scrollState = rememberScrollState()
+        val nestedScrollConnection = remember {
+            object : NestedScrollConnection {
+                override fun onPreScroll(available: Offset, source: NestedScrollSource): Offset {
+                    if (isLight) {
+                        topBarColor = scrollState.themeColor(def, blue1, 150f)
+                    }
+                    return super.onPreScroll(available, source)
+                }
             }
         }
-    }
-    JetChatTheme {
         JetChatScaffold(
             modifier = Modifier.nestedScroll(nestedScrollConnection),
             topBarColor = topBarColor,
