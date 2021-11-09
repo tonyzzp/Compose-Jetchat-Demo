@@ -24,7 +24,7 @@ class ConversationFragment : Fragment() {
     ): View {
         val profiles = listOf(colleagueProfile, meProfile)
         val view = ComposeView(inflater.context)
-        val insets = ViewWindowInsetObserver(view).start(false)
+        val insets = ViewWindowInsetObserver(view).start(false, false)
         view.setContent {
             CompositionLocalProvider(LocalWindowInsets provides insets) {
                 ConversationPage(

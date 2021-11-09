@@ -254,7 +254,6 @@ private fun BottomBar(
 ) {
     Column(
         modifier = Modifier.background(mtColors.BLUE_1)
-            .animateContentSize(tween(easing = LinearEasing))
     ) {
         var action by remember { mutableStateOf<BottomAction?>(null) }
         BackHandler(

@@ -15,8 +15,8 @@ import androidx.compose.ui.draw.clip
 import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.graphics.RectangleShape
 import androidx.compose.ui.res.painterResource
-import androidx.compose.ui.tooling.preview.Preview
 import androidx.compose.ui.unit.dp
+import com.google.accompanist.insets.statusBarsHeight
 import com.google.accompanist.insets.statusBarsPadding
 import com.google.accompanist.systemuicontroller.rememberSystemUiController
 import kotlinx.coroutines.launch
@@ -30,6 +30,7 @@ private val MENUS = listOf("composers", "droidcon-nyc")
 
 @Composable
 fun JetChatScaffold(
+    modifier: Modifier = Modifier,
     scaffoldState: ScaffoldState = rememberScaffoldState(),
     topBarColor: Color = mtColors.surface,
     topBarTitle: @Composable () -> Unit = {},
@@ -37,13 +38,12 @@ fun JetChatScaffold(
     onPeopleClick: (name: String) -> Unit = {},
     onConversationClick: () -> Unit = {},
     floatingActionButton: @Composable () -> Unit = {},
-    modifier: Modifier = Modifier,
     content: @Composable (PaddingValues) -> Unit,
 ) {
     val coroutineScope = rememberCoroutineScope()
     val systemUiController = rememberSystemUiController()
     systemUiController.setNavigationBarColor(Color.Transparent, !isSystemInDarkTheme())
-    systemUiController.setStatusBarColor(topBarColor, !isSystemInDarkTheme())
+    systemUiController.setStatusBarColor(Color.Transparent, !isSystemInDarkTheme())
     Scaffold(
         scaffoldState = scaffoldState,
         drawerContent = {
@@ -91,7 +91,7 @@ private fun JetChatTopAppBar(
     onNavIconClick: () -> Unit,
 ) {
     Box(
-        Modifier.height(IntrinsicSize.Min)
+        Modifier.height(IntrinsicSize.Min).background(backgroundColor)
     ) {
         TopAppBar(
             title = {},
@@ -122,10 +122,10 @@ private fun ColumnScope.JetChatDrawer(
     onConversationClick: () -> Unit,
     onPeopleClick: (name: String) -> Unit,
 ) {
-    Spacer(Modifier.statusBarsPadding())
+    Spacer(Modifier.statusBarsHeight())
 
     Row(
-        modifier = Modifier.height(56.dp),
+        modifier = Modifier.requiredHeight(56.dp),
         verticalAlignment = Alignment.CenterVertically,
     ) {
         Spacer(Modifier.width(12.dp))
@@ -140,7 +140,7 @@ private fun ColumnScope.JetChatDrawer(
             null
         )
     }
-    Divider()
+    Divider(Modifier)
 
     Caption("Chats")
     var currentMenu by remember { mutableStateOf(MENUS.first()) }
@@ -249,17 +249,4 @@ private fun Caption(text: String) {
             .height(48.dp)
             .wrapContentHeight(Alignment.CenterVertically)
     )
-}
-
-@Composable
-@Preview
-private fun JetChatDrawerPreview() {
-    Column(
-        Modifier.fillMaxSize().background(mtColors.primary.copy(0.2f))
-    ) {
-        JetChatDrawer(
-            onConversationClick = {},
-            onPeopleClick = {}
-        )
-    }
 }
