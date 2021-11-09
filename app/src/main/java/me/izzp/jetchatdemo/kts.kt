@@ -1,6 +1,7 @@
 package me.izzp.jetchatdemo
 
 import android.os.Bundle
+import android.view.View
 import androidx.compose.foundation.ScrollState
 import androidx.compose.foundation.layout.PaddingValues
 import androidx.compose.foundation.lazy.LazyListState
@@ -18,8 +19,8 @@ fun WindowInsets.dump() {
     println("statusBarHeight: ${statusBarHeight}, navigationBarHeight:${navigationBarHeight}")
 }
 
-fun Insets.dump() {
-    println("left: $left, right: $right, top: $top, bottom: $bottom")
+fun Insets.dump(log: String = "") {
+    println("${log}left: $left, right: $right, top: $top, bottom: $bottom")
 }
 
 fun PaddingValues.dump() {
@@ -28,6 +29,10 @@ fun PaddingValues.dump() {
     val left = calculateLeftPadding(LayoutDirection.Ltr)
     val right = calculateRightPadding(LayoutDirection.Ltr)
     println("top: $top, bottom: $bottom, left: $left, right: $right")
+}
+
+fun View.dumpSize(log: String = "") {
+    println("${log}size: ${width}*${height}, measuredSize: ${measuredWidth}*${measuredHeight}")
 }
 
 fun NavController.navigateTo(resId: Int, args: Bundle? = null) {

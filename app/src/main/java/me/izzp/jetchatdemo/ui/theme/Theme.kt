@@ -8,7 +8,9 @@ import androidx.compose.material.ripple.rememberRipple
 import androidx.compose.runtime.Composable
 import androidx.compose.runtime.CompositionLocalProvider
 import androidx.compose.ui.graphics.Color
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.unit.dp
+import me.izzp.jetchatdemo.dumpSize
 
 private val blue500 = Color(0xff2196F3)
 private val yellow500 = Color(0xffFFC107)

@@ -22,6 +22,8 @@ import androidx.compose.ui.input.nestedscroll.NestedScrollConnection
 import androidx.compose.ui.input.nestedscroll.NestedScrollSource
 import androidx.compose.ui.input.nestedscroll.nestedScroll
 import androidx.compose.ui.layout.ContentScale
+import androidx.compose.ui.platform.LocalDensity
+import androidx.compose.ui.platform.LocalView
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.text.SpanStyle
 import androidx.compose.ui.text.buildAnnotatedString
@@ -106,10 +108,14 @@ fun ProfilePage(
                 }
             },
         ) {
+            val minHeight = with(LocalDensity.current) {
+                LocalView.current.height.toDp() + 150.dp
+            }
             Column(
                 modifier = Modifier
                     .verticalScroll(scrollState)
                     .padding(18.dp)
+                    .heightIn(min = minHeight)
                     .navigationBarsPadding()
             ) {
                 Image(

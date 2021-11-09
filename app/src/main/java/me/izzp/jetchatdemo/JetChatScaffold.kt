@@ -219,7 +219,7 @@ private fun MenuItem(
         verticalAlignment = Alignment.CenterVertically,
     ) {
         val color =
-            if (isSelected) LocalContentColor.current else LocalContentColor.current.copy(0.7f)
+            if (isSelected) mtColors.primary else LocalContentColor.current
         Icon(
             painterResource(R.drawable.ic_jetchat),
             null,
